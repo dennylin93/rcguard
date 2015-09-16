@@ -150,8 +150,8 @@ class rcguard extends rcube_plugin
 
     $query = $rcmail->db->query(
       "INSERT INTO rcguard
-       (ip, first, last, hits)
-       VALUES (?, NOW(), NOW(), ?)",
+       (ip, last, hits)
+       VALUES (?, NOW(), ?)",
       $client_ip, 1);
   }
 

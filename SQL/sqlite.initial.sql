@@ -2,7 +2,6 @@
 
 CREATE TABLE rcguard (
   ip varchar(40) NOT NULL PRIMARY KEY,
-  first datetime NOT NULL,
   last datetime NOT NULL,
   hits integer NOT NULL
 );

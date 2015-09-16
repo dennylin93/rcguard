@@ -2,7 +2,6 @@
 
 CREATE TABLE `rcguard` (
   `ip` VARCHAR(40) NOT NULL,
-  `first` DATETIME NOT NULL,
   `last` DATETIME NOT NULL,
   `hits` INT(10) NOT NULL,
   PRIMARY KEY (`ip`),

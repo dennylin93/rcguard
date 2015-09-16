@@ -48,7 +48,7 @@ class rcguard extends rcube_plugin
   {
     $this->load_config();
     $rcmail = rcmail::get_instance();
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = $this->get_ip();
 
     $query = $rcmail->db->query(
       "SELECT " . $this->unixtimestamp('last') . " AS last, " . $this->unixtimestamp('NOW()') . " as time
@@ -69,7 +69,7 @@ class rcguard extends rcube_plugin
     $this->load_config();
     $this->add_texts('localization/');
     $rcmail = rcmail::get_instance();
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = $this->get_ip();
 
     $query = $rcmail->db->query(
       "SELECT ip
@@ -118,7 +118,7 @@ class rcguard extends rcube_plugin
 
   function login_after($args)
   {
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = $this->get_ip();
 
     $this->delete_rcguard('', $client_ip, true);
 
@@ -129,7 +129,7 @@ class rcguard extends rcube_plugin
   {
     $rcmail = rcmail::get_instance();
 
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = $this->get_ip();
 
     $query = $rcmail->db->query(
       "SELECT hits
@@ -256,7 +256,7 @@ class rcguard extends rcube_plugin
   {
     $this->load_config();
     $rcmail = rcmail::get_instance();
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = $this->get_ip();
     $username = (empty($username)) ? 'empty username' : $username;
 
     if (!$rcmail->config->get('recaptcha_log'))
@@ -294,7 +294,8 @@ class rcguard extends rcube_plugin
     }
   }
 
-  private function pl_authenticate($args) {
+  private function pl_authenticate($args)
+  {
     $this->load_config();
     $rcmail = rcmail::get_instance();
 
@@ -313,6 +314,25 @@ class rcguard extends rcube_plugin
     }
 
     return $args;
+  }
+
+  private function get_ip()
+  {
+    $this->load_config();
+    $rcmail = rcmail::get_instance();
+    $use_realip = $rcmail->config->get('use_realip');
+
+    $result = $_SERVER['REMOTE_ADDR'];
+
+    if ($use_realip) {
+      if (!empty($_SERVER['HTTP_X_REAL_IP'])) {
+        $result = $_SERVER['HTTP_X_REAL_IP'];
+      } else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $result = $_SERVER['HTTP_X_FORWARDED_FOR'];
+      }
+    }
+
+    return $result;
   }
 }
 

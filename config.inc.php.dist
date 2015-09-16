@@ -13,6 +13,9 @@ $rcmail_config['expire_time'] = 30;
 // Use HTTPS for reCAPTCHA
 $rcmail_config['recaptcha_https'] = false;
 
+// Use real Client IP if given
+$rcmail_config['use_realip'] = false;
+
 // Keys can be obtained from http://recaptcha.net/whyrecaptcha.html
 
 // Public key for reCAPTCHA

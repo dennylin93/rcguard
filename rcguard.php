@@ -262,8 +262,6 @@ class rcguard extends rcube_plugin
       case RCGUARD_RECAPTCHA_FAILURE:
         $log_entry = $rcmail->config->get('recaptcha_log_failure');
         break;
-      default:
-        $log_entry = $rcmail->config->get('recaptcha_log_unknown');
     }
 
     if (empty($log_entry))

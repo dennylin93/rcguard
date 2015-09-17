@@ -48,7 +48,7 @@ class rcguard extends rcube_plugin
   {
     $this->load_config();
     $rcmail = rcmail::get_instance();
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = rcube_utils::remote_addr();
     $failed_attempts = $rcmail->config->get('failed_attempts')
 
     if ($failed_attempts == 0)
@@ -72,7 +72,7 @@ class rcguard extends rcube_plugin
     $this->load_config();
     $this->add_texts('localization/');
     $rcmail = rcmail::get_instance();
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = rcube_utils::remote_addr();
 
     $query = $rcmail->db->query(
       "SELECT ip
@@ -114,7 +114,7 @@ class rcguard extends rcube_plugin
 
   function login_after($args)
   {
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = rcube_utils::remote_addr();
 
     $this->delete_rcguard('', $client_ip, true);
 
@@ -125,7 +125,7 @@ class rcguard extends rcube_plugin
   {
     $rcmail = rcmail::get_instance();
 
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = rcube_utils::remote_addr();
 
     $query = $rcmail->db->query(
       "SELECT hits
@@ -252,7 +252,7 @@ class rcguard extends rcube_plugin
   {
     $this->load_config();
     $rcmail = rcmail::get_instance();
-    $client_ip = $_SERVER['REMOTE_ADDR'];
+    $client_ip = rcube_utils::remote_addr();
     $username = (empty($username)) ? 'empty username' : $username;
 
     if (!$rcmail->config->get('recaptcha_log'))

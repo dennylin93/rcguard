@@ -21,3 +21,7 @@ ALTER TABLE `rcguard`
 ALTER TABLE `rcguard`
   ADD INDEX `last_index` (`last`),
   ADD INDEX `hits_index` (`hits`);
+
+-- 0.5.0 -> 1.0.0
+ALTER TABLE `rcguard`
+  DROP COLUMN `first`

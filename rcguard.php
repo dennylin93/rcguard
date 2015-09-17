@@ -49,16 +49,19 @@ class rcguard extends rcube_plugin
     $this->load_config();
     $rcmail = rcmail::get_instance();
     $client_ip = $_SERVER['REMOTE_ADDR'];
+    $failed_attempts = $rcmail->config->get('failed_attempts')
+
+    if ($failed_attempts == 0)
+        return $loginform;
 
     $query = $rcmail->db->query(
       "SELECT " . $this->unixtimestamp('last') . " AS last, " . $this->unixtimestamp('NOW()') . " as time
        FROM rcguard
        WHERE ip = ? AND hits >= ?",
-      $client_ip, $rcmail->config->get('failed_attempts'));
+      $client_ip, $failed_attempts);
     $result = $rcmail->db->fetch_assoc($query);
 
-    if ((!$result || $this->delete_rcguard($result, $client_ip)) &&
-      $rcmail->config->get('failed_attempts') != 0)
+    if (!$result || $this->delete_rcguard($result, $client_ip))
       return $loginform;
 
     return $this->show_recaptcha($loginform);

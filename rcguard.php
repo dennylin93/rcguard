@@ -49,7 +49,7 @@ class rcguard extends rcube_plugin
     $this->load_config();
     $rcmail = rcmail::get_instance();
     $client_ip = rcube_utils::remote_addr();
-    $failed_attempts = $rcmail->config->get('failed_attempts')
+    $failed_attempts = $rcmail->config->get('failed_attempts');
 
     if ($failed_attempts == 0)
         return $loginform;

@@ -116,7 +116,7 @@ class rcguard extends rcube_plugin
   {
     $client_ip = rcube_utils::remote_addr();
 
-    $this->delete_rcguard('', $client_ip, true);
+//    $this->delete_rcguard('', $client_ip, true);
 
     return $args;
   }
